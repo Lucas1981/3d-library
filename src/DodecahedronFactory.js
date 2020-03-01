@@ -18,7 +18,7 @@ export default class DodecahedronFactory {
       const totalLength = verticalStep + bottomDistance;
       const offsetY = totalLength / 2 * -1;
       const vertices = [];
-      for (var i = 0; i < 5; i++) {
+      for (let i = 0; i < 5; i++) {
         let z = 500 + Math.sin(Geometry.convertDegreesToRadians(360 / 5 * i)) * radius;
         let x = Math.cos(Geometry.convertDegreesToRadians(360 / 5 * i)) * radius;
         vertices.push(new Point3D(x, offsetY, z));
