@@ -1,0 +1,9 @@
+# 3D Object creation and animation library
+
+This is a simple library with which to create and manipulate 3D objects. I started this library a while ago, trying to apply the principles from the book Mathematics for 3D Game Programming and Computer Graphics, writing it all in TypeScript. Then I destroyed my computer and lost everything, with all I had left being ]a compiled Dodecahedron demo](http://zzp-online-marketing.nl/js-portfolio/dodecahedron/). I wanted to get back to it so now I'm trying to figure out how all of that hung together, based on the source code from that demo and trying to figure out how everything works. It's still very much a work in progress.
+
+## The buildup
+
+So, everything starts with the world. A `World` class should be instantiated and it's `draw()` method called on an loop from the `AnimationFactory`. You can add objects of the `Object3D` type to that world with the `addObject()` method on the world object. The 3D Objects are composed of primarily an array of Point3D objects in its `vertices` member and polygons of the `Polygon3D` type that have an array of `vertexIndices` references that point back to entries in the `vertices` member. This is roughly based on principles outlined in the old book Tricks of the 3D Game Programming Gurus.
+
+When the `world` object renders the world, it makes use of the `ViewFrustum` class, which has a pointer to the actual `Canvas` object that does the final drawing, and the conversion from a Point3D to a Point2D object actually also takes place in the `viewFrustum` object, using the `getProjected2DPoint` method. When the draw method is called all the polygons in all the objects in the world are all thrown together in one big pool, ran throught the static `sort()` method of the `PaintersAlgorithm` class and then all processed at once. This is also where transformation, scaling and rotating should take place, but I still ahve to restore that functionality.
