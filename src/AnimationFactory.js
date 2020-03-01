@@ -40,4 +40,4 @@ export default class AnimationFactory {
     };
     return loopFunction;
   }
-};
+}

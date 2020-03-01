@@ -1,5 +1,7 @@
 import Polygon3D from './Polygon3D';
 import PaintersAlgorithm from './PaintersAlgorithm.js';
+import TransformFactory from './TransformFactory.js';
+import MatrixAdapter from './matrix/MatrixAdapter.js';
 
 export default class World {
   constructor(viewFrustum) {
@@ -31,7 +33,9 @@ export default class World {
     let accumulatedIndex = 0;
 
     for(const object of this.objects) {
-      const vertices = object.getVertices();
+      const position = object.getPosition();
+      const translation = TransformFactory.translate(position);
+      const vertices = MatrixAdapter.applyMatrixToPoints3D(translation, object.getAlteredVertices());
       const polygons = this.shiftVertexIndicesOfPolygons(object.getPolygons(), accumulatedIndex);
       finalPolygons = [
         ...finalPolygons,

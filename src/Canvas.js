@@ -87,4 +87,4 @@ export default class Canvas {
     this.ctx.clearRect(x, y, width, height);
     return this;
   }
-};
+}

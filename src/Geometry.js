@@ -7,8 +7,8 @@ export default class Geometry {
 
   static pythagoras(...args) {
     let squares = 0;
-    for (argument of args) {
-        squares += Math.pow(argument, 2);
+    for (const argument of args) {
+      squares += Math.pow(argument, 2);
     }
     return Math.sqrt(squares);
 }
@@ -20,4 +20,4 @@ export default class Geometry {
   static convertRadiansToDegrees(radians) {
       return radians * radiansToDegrees;
   }
-};
+}

@@ -8,7 +8,7 @@ export default class Point3D {
 
   asArray() {
       return [this.x, this.y, this.z, this.w];
-  };
+  }
 
   toJSON() {
       return {
@@ -17,5 +17,5 @@ export default class Point3D {
           z: this.z,
           w: this.w
       };
-  };
-};
+  }
+}

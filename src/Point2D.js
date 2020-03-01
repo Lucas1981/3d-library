@@ -14,4 +14,4 @@ export default class Point2D {
           y: this.y
       };
     }
-};
+}

@@ -19,18 +19,18 @@ export default class DodecahedronFactory {
       const offsetY = totalLength / 2 * -1;
       const vertices = [];
       for (let i = 0; i < 5; i++) {
-        let z = 500 + Math.sin(Geometry.convertDegreesToRadians(360 / 5 * i)) * radius;
+        let z = Math.sin(Geometry.convertDegreesToRadians(360 / 5 * i)) * radius;
         let x = Math.cos(Geometry.convertDegreesToRadians(360 / 5 * i)) * radius;
         vertices.push(new Point3D(x, offsetY, z));
-        z = 500 + Math.sin(Geometry.convertDegreesToRadians(360 / 5 * i)) * stuckoutRadius;
+        z = Math.sin(Geometry.convertDegreesToRadians(360 / 5 * i)) * stuckoutRadius;
         x = Math.cos(Geometry.convertDegreesToRadians(360 / 5 * i)) * stuckoutRadius;
         let y = verticalStep;
         vertices.push(new Point3D(x, offsetY + y, z));
-        z = 500 + Math.sin(Geometry.convertDegreesToRadians((360 / 5 * i) + 180)) * stuckoutRadius;
+        z = Math.sin(Geometry.convertDegreesToRadians((360 / 5 * i) + 180)) * stuckoutRadius;
         x = Math.cos(Geometry.convertDegreesToRadians((360 / 5 * i) + 180)) * stuckoutRadius;
         y = totalLength - verticalStep;
         vertices.push(new Point3D(x, offsetY + y, z));
-        z = 500 + Math.sin(Geometry.convertDegreesToRadians((360 / 5 * i) + 180)) * radius;
+        z = Math.sin(Geometry.convertDegreesToRadians((360 / 5 * i) + 180)) * radius;
         x = Math.cos(Geometry.convertDegreesToRadians((360 / 5 * i) + 180)) * radius;
         y = totalLength;
         vertices.push(new Point3D(x, offsetY + y, z));
@@ -51,4 +51,4 @@ export default class DodecahedronFactory {
       ];
       return new Object3D(vertices, polygons, _x, _y, _z);
     }
-};
+}

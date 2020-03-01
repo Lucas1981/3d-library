@@ -3,15 +3,15 @@ import Polygon3D from './Polygon3D.js';
 import Point3D from './Point3D.js';
 
 const cubeVertices = [
-  new Point3D(-10, -10, 40),
-  new Point3D(10, -10, 40),
-  new Point3D(10, 10, 40),
-  new Point3D(-10, 10, 40),
+  new Point3D(-1, -1, -1),
+  new Point3D(1, -1, -1),
+  new Point3D(1, 1, -1),
+  new Point3D(-1, 1, -1),
 
-  new Point3D(-10, -10, 60),
-  new Point3D(10, -10, 60),
-  new Point3D(10, 10, 60),
-  new Point3D(-10, 10, 60),
+  new Point3D(-1, -1, 1),
+  new Point3D(1, -1, 1),
+  new Point3D(1, 1, 1),
+  new Point3D(-1, 1, 1),
 ];
 
 export default class CubeFactory {
