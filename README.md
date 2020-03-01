@@ -1,6 +1,6 @@
 # 3D Object creation and animation library
 
-This is a simple library with which to create and manipulate 3D objects. I started this library a while ago, trying to apply the principles from the book Mathematics for 3D Game Programming and Computer Graphics, writing it all in TypeScript. Then I destroyed my computer and lost everything, with all I had left being ]a compiled Dodecahedron demo](http://zzp-online-marketing.nl/js-portfolio/dodecahedron/). I wanted to get back to it so now I'm trying to figure out how all of that hung together, based on the source code from that demo and trying to figure out how everything works. It's still very much a work in progress.
+This is a simple library with which to create and manipulate 3D objects. I started this library a while ago, trying to apply the principles from the book Mathematics for 3D Game Programming and Computer Graphics, writing it all in TypeScript. Then I destroyed my computer and lost everything, with all I had left being [a compiled Dodecahedron demo](http://zzp-online-marketing.nl/js-portfolio/dodecahedron/). I wanted to get back to it so now I'm trying to figure out how all of that hung together, based on the source code from that demo and trying to figure out how everything works. It's still very much a work in progress.
 
 ## The buildup
 
