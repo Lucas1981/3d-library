@@ -1,7 +1,7 @@
-import Geometry from './Geometry.js';
-import Point3D from './Point3D.js';
-import Polygon3D from './Polygon3D.js';
-import Object3D from './Object3D.js';
+import Geometry from '../Geometry.js';
+import Point3D from '../Point3D.js';
+import Polygon3D from '../Polygon3D.js';
+import Object3D from '../Object3D.js';
 
 export default class DodecahedronFactory {
     constructor() {}
@@ -41,13 +41,13 @@ export default class DodecahedronFactory {
         new Polygon3D([8, 9, 2, 13, 12], strokeColor, fillColor),
         new Polygon3D([12, 13, 6, 17, 16], strokeColor, fillColor),
         new Polygon3D([16, 17, 10, 1, 0], strokeColor, fillColor),
-        new Polygon3D([3, 2, 13, 6, 7], strokeColor, fillColor),
-        new Polygon3D([7, 6, 17, 10, 11], strokeColor, fillColor),
-        new Polygon3D([11, 10, 1, 14, 15], strokeColor, fillColor),
-        new Polygon3D([15, 14, 5, 18, 19], strokeColor, fillColor),
-        new Polygon3D([19, 18, 9, 2, 3], strokeColor, fillColor),
+        new Polygon3D([7, 6, 13, 2, 3], strokeColor, fillColor),
+        new Polygon3D([11, 10, 17, 6, 7], strokeColor, fillColor),
+        new Polygon3D([15, 14, 1, 10, 11], strokeColor, fillColor),
+        new Polygon3D([19, 18, 5, 14, 15], strokeColor, fillColor),
+        new Polygon3D([3, 2, 9, 18, 19], strokeColor, fillColor),
         new Polygon3D([0, 4, 8, 12, 16], strokeColor, fillColor),
-        new Polygon3D([3, 7, 11, 15, 19], strokeColor, fillColor)
+        new Polygon3D([19, 15, 11, 7, 3], strokeColor, fillColor)
       ];
       return new Object3D(vertices, polygons, _x, _y, _z);
     }

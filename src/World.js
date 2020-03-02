@@ -1,7 +1,11 @@
+import Point3D from './Point3D.js';
 import Polygon3D from './Polygon3D';
 import PaintersAlgorithm from './PaintersAlgorithm.js';
 import TransformFactory from './TransformFactory.js';
 import MatrixAdapter from './matrix/MatrixAdapter.js';
+import BackFaceCulling from './BackFaceCulling.js';
+
+const applyBackFaceCulling = false;
 
 export default class World {
   constructor(viewFrustum) {
@@ -52,7 +56,10 @@ export default class World {
 
     /* Then paint the compiled list of polygons */
     for (const polygon of sortedFinalPolygons) {
-      this.drawPolygon(finalVertices, polygon);
+      const point = new Point3D(0, 0, -1 * this.viewFrustum.getHalfScreenWidth());
+      if (!applyBackFaceCulling || BackFaceCulling.determine(point, finalVertices, polygon)) {
+        this.drawPolygon(finalVertices, polygon);
+      }
     }
   }
 

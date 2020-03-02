@@ -4,4 +4,12 @@ export default class Polygon3D {
     this.strokeColor = strokeColor;
     this.fillColor = fillColor;
   }
+
+  setStrokeColor(color) {
+    this.strokeColor = color;
+  }
+
+  setFillColor(color) {
+    this.fillColor = color;
+  }
 }

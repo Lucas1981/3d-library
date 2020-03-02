@@ -1,7 +1,7 @@
 import Canvas from './Canvas.js';
 import AnimationFactory from './AnimationFactory.js';
-import CubeFactory from './CubeFactory.js';
-import DodecahedronFactory from './DodecahedronFactory.js';
+import CubeFactory from './shapes/CubeFactory.js';
+import DodecahedronFactory from './shapes/DodecahedronFactory.js';
 import ViewFrustum from './ViewFrustum.js';
 import World from './world.js';
 
@@ -20,6 +20,26 @@ const main = elapsedTime => {
   world.draw();
 };
 const infiniteLoop = AnimationFactory.infiniteLoop(main);
+const polygons = dodecahedron.getPolygons();
+
+const colors = [
+  "red", "yellow", "green", "blue",
+  "orange", "brown", "white", "pink",
+  "grey", "magenta", "teal", "purple",
+];
+
+const dodecahedronPolygons = dodecahedron.getPolygons();
+const cubePolygons = cube.getPolygons();
+
+for (let i = 0; i < dodecahedronPolygons.length; i++) {
+  dodecahedronPolygons[i].setStrokeColor(colors[i]);
+  dodecahedronPolygons[i].setFillColor(colors[i]);
+}
+
+for (let i = 0; i < cubePolygons.length; i++) {
+  cubePolygons[i].setStrokeColor(colors[i]);
+  cubePolygons[i].setFillColor(colors[i]);
+}
 
 world.addObject(cube);
 world.addObject(dodecahedron);

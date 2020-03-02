@@ -30,6 +30,10 @@ export default class ViewFrustum {
     return this.canvas.getContext();
   }
 
+  getHalfScreenWidth() {
+    return this.halfScreenWidth;
+  }
+
   clearScreen() {
     return this.canvas.clear();
   }
