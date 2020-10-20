@@ -3,7 +3,7 @@ export default class Canvas {
     this.id = id;
     this.width = width;
     this.height = height;
-    this.canvas = document.getElementById(id);
+    this.canvas = this.id ? document.getElementById(id) : document.createElement('canvas');
     this.ctx = this.canvas.getContext('2d');
     this.initiate();
   }

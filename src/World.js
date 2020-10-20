@@ -4,11 +4,19 @@ import PaintersAlgorithm from './PaintersAlgorithm.js';
 import TransformFactory from './TransformFactory.js';
 import MatrixAdapter from './matrix/MatrixAdapter.js';
 import BackFaceCulling from './BackFaceCulling.js';
+// import Gouraud from './texture/Gouraud.js';
 
-const applyBackFaceCulling = false;
+const defaultApplyBackFaceCulling = true;
+const methods = {
+  svg: 1,
+  canvasVectors: 2,
+  canvasPixelated: 3
+};
+const method = methods.canvasVectors;
 
 export default class World {
-  constructor(viewFrustum) {
+  constructor(viewFrustum, applyBackFaceCulling = defaultApplyBackFaceCulling) {
+    this.applyBackFaceCulling = applyBackFaceCulling;
     this.viewFrustum = viewFrustum;
     this.objects = [];
     this.context = viewFrustum.getContext();
@@ -57,7 +65,7 @@ export default class World {
     /* Then paint the compiled list of polygons */
     for (const polygon of sortedFinalPolygons) {
       const point = new Point3D(0, 0, -1 * this.viewFrustum.getHalfScreenWidth());
-      if (!applyBackFaceCulling || BackFaceCulling.determine(point, finalVertices, polygon)) {
+      if (!this.applyBackFaceCulling || BackFaceCulling.determine(point, finalVertices, polygon)) {
         this.drawPolygon(finalVertices, polygon);
       }
     }
@@ -78,6 +86,21 @@ export default class World {
   }
 
   drawPolygon(vertices, polygon) {
+    switch(method) {
+      case methods.svg:
+        break;
+      case methods.canvasVectors:
+        this.drawPolygonCanvasVectors(vertices, polygon);
+        break;
+      case methods.pixelated:
+        // this.drawPolygonCanvasPixelated(vertices, polygon);
+        break;
+      default:
+        throw new Error('Unknown drawing method specified');
+    }
+  }
+
+  drawPolygonCanvasVectors(vertices, polygon) {
     this.context.beginPath();
     for (let i = 0; i < polygon.vertexIndices.length; i++) {
       const next = (i === polygon.vertexIndices.length - 1 ? 0 : i + 1);
@@ -96,4 +119,9 @@ export default class World {
     }
     return this;
   }
+
+  // drawPolygonCanvasPixelated(vertices, polygon) {
+  //   const contextData = this.canvas.getContextData();
+  //   Gouraud.drawGeneralTriangleGouraudTexture(polygon, textureData, contextData);
+  // }
 }

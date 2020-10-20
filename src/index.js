@@ -9,15 +9,18 @@ const height = 500;
 const fov = 60;
 const anglesPerMilliseconds = 90 / 1000;
 const shapes = [
-  ShapeFactory.dodecahedron(-100, 0, 400, 20),
-  ShapeFactory.cube(20, 0, 80, 5),
-  ShapeFactory.pyramid(-20, 20, 100, 8, 2),
-  ShapeFactory.tetrahedron(20, 20, 100, 8, 1),
-  ShapeFactory.mesh(0, 0, 100, 8, 8, 4, 4),
-  ShapeFactory.prism(0, 0, 100, 8, 16, 5, 'yellow', 'darkgrey')
+  // ShapeFactory.dodecahedron(-100, 0, 400, 20),
+  // ShapeFactory.cube(20, 0, 80, 5),
+  // ShapeFactory.pyramid(-20, 20, 100, 8, 2),
+  // ShapeFactory.tetrahedron(20, 20, 100, 8, 1),
+  // ShapeFactory.mesh(0, 0, 100, 8, 8, 4, 4),
+  // ShapeFactory.prism(0, 0, 100, 8, 16, 5)
+  // ShapeFactory.triangle(20, 0, 100, 8) // This is a diagnostic for the backFaceCulling. Checks out
+  ShapeFactory.torus(0, 0, 150, 32, 25, 11, 25),
+  // ShapeFactory.sphere(0, 0, 100, 20, 32)
 ];
 const viewFrustum = new ViewFrustum(width, height, fov, "canvas");
-const world = new World(viewFrustum);
+const world = new World(viewFrustum, false);
 const main = elapsedTime => {
   const progress = anglesPerMilliseconds * elapsedTime;
   const objects = world.getObjects();

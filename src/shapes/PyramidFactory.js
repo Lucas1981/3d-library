@@ -15,7 +15,8 @@ export default class PyramidFactory {
     ];
 
     const polygons = [
-      new Polygon3D([1, 2, 3, 4], strokeColor, fillColor),
+      new Polygon3D([3, 2, 1], strokeColor, fillColor),
+      new Polygon3D([4, 3, 1], strokeColor, fillColor),
       new Polygon3D([0, 1, 2], strokeColor, fillColor),
       new Polygon3D([0, 2, 3], strokeColor, fillColor),
       new Polygon3D([0, 3, 4], strokeColor, fillColor),
