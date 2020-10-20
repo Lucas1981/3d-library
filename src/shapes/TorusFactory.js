@@ -26,14 +26,14 @@ export default class TorusFactory {
         // Register all the polygons
         polygons.push(new Polygon3D([
           turns * i + j,
-          turns * i + ((j + 1) % turns),
           (turns * ((i + 1) % sides)) + ((j + 1) % turns),
+          turns * i + ((j + 1) % turns),
         ], strokeColor, fillColor));
 
         polygons.push(new Polygon3D([
           turns * i + j,
-          (turns * ((i + 1) % sides)) + ((j + 1) % turns),
           (turns * ((i + 1) % sides)) + j,
+          (turns * ((i + 1) % sides)) + ((j + 1) % turns),
         ], strokeColor, fillColor));
       }
     }

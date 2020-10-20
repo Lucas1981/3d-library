@@ -19,6 +19,7 @@ export default class World {
     this.applyBackFaceCulling = applyBackFaceCulling;
     this.viewFrustum = viewFrustum;
     this.objects = [];
+    this.lights = [];
     this.context = viewFrustum.getContext();
   }
 
@@ -26,9 +27,20 @@ export default class World {
     this.objects.push(object);
   }
 
+  addLight(light) {
+    this.lights.push(light);
+  }
+
   addObjects(objects) {
     for (let i = 0; i < objects.length; i++) {
         this.addObject(objects[i]);
+    }
+    return this;
+  }
+
+  addLights(lights) {
+    for (let i = 0; i < lights.length; i++) {
+      this.addLight(lights[i]);
     }
     return this;
   }
@@ -110,14 +122,29 @@ export default class World {
       else this.context.lineTo(p1.x, p1.y);
     }
     this.context.closePath();
+
     if (polygon.strokeColor !== null)
-      this.context.strokeStyle = polygon.strokeColor;
+      this.context.strokeStyle = this.determineLighting(polygon.strokeColor, vertices[polygon.vertexIndices[0]]);
       this.context.stroke();
     if (polygon.fillColor !== null) {
-      this.context.fillStyle = polygon.fillColor;
+      this.context.fillStyle = this.determineLighting(polygon.fillColor, vertices[polygon.vertexIndices[0]]);
       this.context.fill();
     }
     return this;
+  }
+
+  determineLighting(color, point) {
+    let final = { r: 0, g: 0, b: 0 };
+
+    for (const light of this.lights) {
+      const { r, g, b } = light(color, point);
+      final.r += r;
+      final.g += g;
+      final.b += b;
+    }
+
+    const { r, g, b } = final;
+    return `rgb(${r},${g},${b})`;
   }
 
   // drawPolygonCanvasPixelated(vertices, polygon) {

@@ -24,14 +24,14 @@ export default class SphereFactory {
         if (i > 0) {
           polygons.push(new Polygon3D([
             (i * sides) + j,
-            ((i - 1) * sides) + j,
             ((i - 1) * sides) + ((j + 1) % sides),
+            ((i - 1) * sides) + j,
           ], strokeColor, fillColor));
 
           polygons.push(new Polygon3D([
             (i * sides) + j,
-            ((i - 1) * sides) + ((j + 1) % sides),
             (i * sides) + ((j + 1) % sides),
+            ((i - 1) * sides) + ((j + 1) % sides),
           ], strokeColor, fillColor));
         }
       }
