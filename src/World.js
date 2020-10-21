@@ -113,6 +113,8 @@ export default class World {
   }
 
   drawPolygonCanvasVectors(vertices, polygon) {
+    const aggregate = { x: 0, y: 0, z: 0 };
+
     this.context.beginPath();
     for (let i = 0; i < polygon.vertexIndices.length; i++) {
       const next = (i === polygon.vertexIndices.length - 1 ? 0 : i + 1);
@@ -120,28 +122,45 @@ export default class World {
       const p1 = this.viewFrustum.getProjected2DPoint(v1);
       if (i == 0) this.context.moveTo(p1.x, p1.y);
       else this.context.lineTo(p1.x, p1.y);
+      aggregate.x += v1.x;
+      aggregate.y += v1.y;
+      aggregate.z += v1.z;
     }
+    const centerPoint = new Point3D(
+      aggregate.x / polygon.vertexIndices.length,
+      aggregate.y / polygon.vertexIndices.length,
+      aggregate.z / polygon.vertexIndices.length
+    );
+
     this.context.closePath();
 
     if (polygon.strokeColor !== null)
-      this.context.strokeStyle = this.determineLighting(polygon.strokeColor, vertices[polygon.vertexIndices[0]]);
+      this.context.strokeStyle = this.determineLighting(polygon.strokeColor, centerPoint);
       this.context.stroke();
     if (polygon.fillColor !== null) {
-      this.context.fillStyle = this.determineLighting(polygon.fillColor, vertices[polygon.vertexIndices[0]]);
+      this.context.fillStyle = this.determineLighting(polygon.fillColor, centerPoint);
       this.context.fill();
     }
     return this;
   }
 
   determineLighting(color, point) {
+    const lightMax = 255;
     let final = { r: 0, g: 0, b: 0 };
 
     for (const light of this.lights) {
-      const { r, g, b } = light(color, point);
+      const { r, g, b } = light.calculate(color, point);
       final.r += r;
       final.g += g;
       final.b += b;
     }
+
+    // Make sure the light doesn't exceed 255
+    final = {
+      r: Math.min(final.r, lightMax),
+      g: Math.min(final.g, lightMax),
+      b: Math.min(final.b, lightMax)
+    };
 
     const { r, g, b } = final;
     return `rgb(${r},${g},${b})`;

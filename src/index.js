@@ -3,7 +3,7 @@ import AnimationFactory from './AnimationFactory.js';
 import ShapeFactory from './shapes/ShapeFactory.js';
 import ViewFrustum from './ViewFrustum.js';
 import World from './world.js';
-import LightFactory from './lights/LightFactory.js';
+import Light from './lights/Light.js';
 import Point3D from './Point3D.js';
 
 const width = 800;
@@ -15,10 +15,10 @@ const shapes = [
   // ShapeFactory.cube(20, 0, 80, 5),
   // ShapeFactory.pyramid(-20, 20, 100, 8, 2),
   // ShapeFactory.tetrahedron(20, 20, 100, 8, 1),
-  // ShapeFactory.mesh(0, 0, 100, 8, 8, 4, 4),
+  ShapeFactory.mesh(0, 10, 50, 8, 8, 4, 4).rotate(90, 0, 0),
   // ShapeFactory.prism(0, 0, 100, 8, 16, 5),
-  // ShapeFactory.torus(0, 0, 150, 32, 25, 11, 25),
-  ShapeFactory.sphere(0, 0, 60, 10, 32),
+  ShapeFactory.torus(0, 5, 50, 32, 12, 1, 5).rotate(10, 0, 0),
+  ShapeFactory.sphere(0, -5, 50, 5, 32),
   // ShapeFactory.triangle(20, 0, 100, 8) // This is a diagnostic for the backFaceCulling. Checks out
 ];
 const viewFrustum = new ViewFrustum(width, height, fov, "canvas");
@@ -28,16 +28,15 @@ const main = elapsedTime => {
   const objects = world.getObjects();
   for (const object of objects) {
     object.rotate(
-      anglesPerMilliseconds * elapsedTime,
-      -anglesPerMilliseconds * elapsedTime,
-      anglesPerMilliseconds * elapsedTime);
+      0,// anglesPerMilliseconds * elapsedTime,
+       -anglesPerMilliseconds * elapsedTime,
+      0); // anglesPerMilliseconds * elapsedTime);
   }
   world.draw();
 };
 const infiniteLoop = AnimationFactory.infiniteLoop(main);
 const lights = [
-  LightFactory.point(new Point3D(0, 0, 50), 1, 1, 0, 0.1),
-  // LightFactory.point(new Point3D(30, -30, 30), 1, 0, 0.2, 0),
+  new Light(new Point3D(0, 5, 50), 1, 1, 0, 0.02),
 ];
 
 const colors = [

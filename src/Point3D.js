@@ -1,21 +1,28 @@
 export default class Point3D {
   constructor(x, y, z, w = 1) {
-    this.x = x;
-    this.y = y;
-    this.z = z;
-    this.w = w;
+    this._x = x;
+    this._y = y;
+    this._z = z;
+    this._w = w;
   }
 
+  get x() { return this._x; }
+  get y() { return this._y; }
+  get z() { return this._z; }
+  set x(x) { this._x = x; }
+  set y(y) { this._y = y; }
+  set z(z) { this._z = z; }
+
   asArray() {
-      return [this.x, this.y, this.z, this.w];
+      return [this._x, this._y, this._z, this._w];
   }
 
   toJSON() {
       return {
-          x: this.x,
-          y: this.y,
-          z: this.z,
-          w: this.w
+          x: this._x,
+          y: this._y,
+          z: this._z,
+          w: this._w
       };
   }
 }
