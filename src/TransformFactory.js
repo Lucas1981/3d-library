@@ -32,6 +32,12 @@ export default class TransformFactory {
     }
   }
 
+  static translateAndRotate(translationVertex, alpha, beta, gamma) {
+    const translation = this.translate(translationVertex);
+    const rotation = this.rotate(alpha, beta, gamma);
+    return Matrices.product(translation, rotation);
+  }
+
   static rotate(alpha, beta, gamma) {
     const rotateX = this.rotateX(alpha);
     const rotateXY = Matrices.product(rotateX, this.rotateY(beta));

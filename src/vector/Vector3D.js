@@ -53,14 +53,14 @@ export default class Vector3D {
 
   /* P + (-Q) */
   subtractVector(vector) {
-    var subtracted = Vectors.subtract(this, vector);
+    const subtracted = Vectors.subtract(this, vector);
     this.x = subtracted[0];
     this.y = subtracted[1];
     this.z = subtracted[2];
   }
 
   scale(scalar) {
-      var outcome = Vectors.scale(this, scalar);
+      const outcome = Vectors.scale(this, scalar);
       this.x = outcome[0];
       this.y = outcome[1];
       this.z = outcome[2];
@@ -68,7 +68,7 @@ export default class Vector3D {
 
   /* P · Q */
   dotProduct(vector) {
-      var dotProduct = vector.coordinatesAsArray[0] * this.x;
+      let dotProduct = vector.coordinatesAsArray[0] * this.x;
       dotProduct += vector.coordinatesAsArray[1] * this.y;
       dotProduct += vector.coordinatesAsArray[2] * this.z;
       return dotProduct;

@@ -35,6 +35,7 @@ export default class DodecahedronFactory {
         y = totalLength;
         vertices.push(new Point3D(x, offsetY + y, z));
       }
+      // This is still kinda funky being built up not of triangles. Things will behave weird when camera translation/rotation kicks in
       const polygons = [
         new Polygon3D([0, 1, 14, 5, 4], strokeColor, fillColor),
         new Polygon3D([4, 5, 18, 9, 8], strokeColor, fillColor),

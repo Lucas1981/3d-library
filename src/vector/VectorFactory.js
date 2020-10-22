@@ -18,4 +18,14 @@ export default class VectorFactory {
     const vector = new Vector3D(arr[0], arr[1], arr[2]);
     return vector;
   }
+
+  static createNormalizedVector(v1) {
+  	if (v1.magnitude === 0) return v1; // This would produce a division-by-zero. To avoid that, return 0.
+
+    return new Vector3D(
+      v1.x * v1.unitLength,
+      v1.y * v1.unitLength,
+      v1.z * v1.unitLength
+    );
+  }
 }

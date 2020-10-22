@@ -5,12 +5,26 @@ export default class Polygon3D {
     vertexIndices,
     strokeColor = null,
     fillColor = null,
-    texture = null
+    texture = null,
+    strokeColorAfterLighting = null,
+    fillColorAfterLighting = null
   ) {
     this.vertexIndices = vertexIndices;
     this.strokeColor = strokeColor;
     this.fillColor = fillColor;
     this.texture = texture;
+    this.strokeColorAfterLighting = strokeColorAfterLighting;
+    this.fillColorAfterLighting = fillColorAfterLighting;
+  }
+
+  setStrokeColorAfterLighting(color) {
+    this.strokeColorAfterLighting = color;
+    return this;
+  }
+
+  setFillColorAfterLighting(color) {
+    this.fillColorAfterLighting = color;
+    return this;
   }
 
   setTexture(texture) {
