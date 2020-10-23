@@ -22,6 +22,7 @@ export default class Light {
   setX(x) { this.sourcePoint.x = x; return this; }
   setY(y) { this.sourcePoint.y = y; return this; }
   setZ(z) { this.sourcePoint.z = z; return this; }
+  setSourcePoint(sourcePoint) { this.sourcePoint = sourcePoint; }
   setKc(kc) { this.kc = kc; return this; }
   setKl(kl) { this.kl = kl; return this; }
   setKq(kq) { this.kq = kq; return this; }
@@ -30,9 +31,9 @@ export default class Light {
 
   calculate(targetPoint) {
     // Calculate the distance from the source to the point p
-    const dx = this.sourcePoint.x - targetPoint.x;
-    const dy = this.sourcePoint.y - targetPoint.y;
-    const dz = this.sourcePoint.z - targetPoint.z;
+    const dx = targetPoint.x - this.sourcePoint.x;
+    const dy = targetPoint.y - this.sourcePoint.y;
+    const dz = targetPoint.z - this.sourcePoint.z;
 
     const dxy = Geometry.pythagoras(dx, dy);
     const d = Geometry.pythagoras(dz, dxy);
@@ -40,7 +41,7 @@ export default class Light {
     // Save some time, don't calculate the spotlight if we don't have to
     let spotlight = 1;
     if (this.l && this.pf) {
-      const sourceVector = new Vector3D(-dx, -dy, -dz); // Compare dp to vector pointing the other way
+      const sourceVector = new Vector3D(dx, dy, dz); // Compare dp to vector pointing the other way
       const normalizedSourceVector = VectorFactory.createNormalizedVector(sourceVector);
       const normalizedTargetVector = VectorFactory.createNormalizedVector(this.l);
       const dp = normalizedTargetVector.dotProduct(normalizedSourceVector);

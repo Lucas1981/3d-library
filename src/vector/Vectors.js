@@ -42,8 +42,12 @@ export default class Vectors {
   static projection(v1, v2) {
     var dotProduct = v1.dotProduct(v2);
     var scalar = dotProduct / Math.pow(v2.magnitude, 2);
-    var coordinates = v2.coordinatesAsArray;
     var outcome = this.scale(v2, scalar);
     return outcome;
+  }
+
+  static perpendicular(v1, v2) {
+    const newVector = new Vector3D(v1.x, v1.y, v1.z);
+    return new Vector3D(...newVector.perpendicular(v2));
   }
 }

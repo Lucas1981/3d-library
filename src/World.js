@@ -1,13 +1,17 @@
 import Point3D from './Point3D.js';
 import Polygon3D from './Polygon3D';
+import Vector3D from './vector/Vector3D.js';
+import VectorAdapter from './vector/VectorAdapter.js';
 import PaintersAlgorithm from './PaintersAlgorithm.js';
 import TransformFactory from './TransformFactory.js';
 import MatrixAdapter from './matrix/MatrixAdapter.js';
 import Matrices from './matrix/Matrices.js';
 import BackFaceCulling from './BackFaceCulling.js';
 import Light from './lights/Light.js';
+import Lighting from './lights/Lighting.js';
 // import Gouraud from './texture/Gouraud.js';
 
+const debug = false;
 const defaultApplyBackFaceCulling = true;
 const methods = {
   svg: 1,
@@ -74,7 +78,7 @@ export default class World {
       this.determineLighting(object.getPolygons(), worldVertices);
 
       // Then continue by applying the camera manipulation
-      const vertices = MatrixAdapter.applyMatrixToPoints3D(cameraManipulation, worldVertices)
+      const vertices = MatrixAdapter.applyMatrixToPoints3D(cameraManipulation, worldVertices);
       const polygons = this.shiftVertexIndicesOfPolygons(object.getPolygons(), accumulatedIndex);
       finalPolygons = [
         ...finalPolygons,
@@ -153,12 +157,35 @@ export default class World {
       this.context.fillStyle = polygon.fillColorAfterLighting;
       this.context.fill();
     }
+
+    if (debug) this.drawSurfaceNormal(vertices, polygon);
+
     return this;
+  }
+
+  drawSurfaceNormal(vertices, polygon) {
+    this.context.beginPath();
+    const ps = vertices[polygon.vertexIndices[0]];
+    const v1 = new Vector3D(ps.x, ps.y, ps.z);
+    const surfaceNormal = polygon.determineSurfaceNormal(vertices);
+    // console.log(v1);
+    // console.log(surfaceNormal);
+    v1.addVector(surfaceNormal);
+    // console.log(v2);
+    const pd = VectorAdapter.vector3DToPoint3D(v1);
+    const p1 = this.viewFrustum.getProjected2DPoint(ps);
+    const p2 = this.viewFrustum.getProjected2DPoint(pd);
+    this.context.moveTo(p1.x, p1.y);
+    this.context.lineTo(p2.x, p2.y);
+    this.context.closePath();
+    this.context.strokeStyle = 'white';
+    this.context.stroke();
   }
 
   determineLighting(polygons, vertices) {
     const lightMax = 255;
     for (const polygon of polygons) {
+      const surfaceNormal = polygon.determineSurfaceNormal(vertices);
       const aggregate = polygon.vertexIndices.reduce((acc, curr) => ({
         x: acc.x + vertices[curr].x,
         y: acc.y + vertices[curr].y,
@@ -175,14 +202,22 @@ export default class World {
       let strokeColorFinal = { r: 0, g: 0, b: 0 };
 
       for (const light of this.lights) {
-        const i = light.calculate(centerPoint);
-        fillColorFinal.r += polygon.fillColor.r * i;
-        fillColorFinal.g += polygon.fillColor.g * i;
-        fillColorFinal.b += polygon.fillColor.b * i;
+        const intensity = light.calculate(centerPoint);
+        const lighting = Lighting.calculate(
+          intensity,
+          polygon,
+          vertices,
+          surfaceNormal,
+          this.camera,
+          light
+        );
+        fillColorFinal.r += polygon.fillColor.r * lighting;
+        fillColorFinal.g += polygon.fillColor.g * lighting;
+        fillColorFinal.b += polygon.fillColor.b * lighting;
 
-        strokeColorFinal.r += polygon.strokeColor.r * i;
-        strokeColorFinal.g += polygon.strokeColor.g * i;
-        strokeColorFinal.b += polygon.strokeColor.b * i;
+        strokeColorFinal.r += polygon.strokeColor.r * lighting;
+        strokeColorFinal.g += polygon.strokeColor.g * lighting;
+        strokeColorFinal.b += polygon.strokeColor.b * lighting;
       }
 
       // Make sure the light doesn't exceed 255
