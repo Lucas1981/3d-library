@@ -17,3 +17,7 @@ Some functionality is still missing for `World` and `Object3D`, mainly concernin
 ## Vectors and back-face culling
 
 I added all the classes that handle vectors now, with methods like `crossProduct()` and `dotProduct()` and also adding/subtracting vectors, all in the `Vector3D` and the `Vectors` classes. This is done so the back-face culling method can be applied to all the polygons, determining whether or not they are facing the right way, based on their coordinates. It's not working super smoothly yet right now. Could be because the polygons are not triangles. Could be because of the fish-eye effect not properly resolving. Could be because I'm not using the camera point as something that the back-face culling takes into account. Not really sure yet. So for now, I'll set the flag that enables the back-face culling to be applied to false in the `World` and stick to the painter's algorithm.
+
+## Lights
+
+I've added controls for lights. It can create three types of light sources: directional, point and spotlight, with the `Lights` class. That light is then computed to create some sort of lighting when it hits a certain point. The qualities of lighting are also three: ambient, diffuse and specular. The quality of the lighting is determined with the `Lighting` class. Both classes live in the `./lights` folder and are handled after the world transformation, but before the camera transformation in the rendering pipeline.

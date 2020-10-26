@@ -45,9 +45,4 @@ export default class Vectors {
     var outcome = this.scale(v2, scalar);
     return outcome;
   }
-
-  static perpendicular(v1, v2) {
-    const newVector = new Vector3D(v1.x, v1.y, v1.z);
-    return new Vector3D(...newVector.perpendicular(v2));
-  }
 }

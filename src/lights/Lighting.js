@@ -25,10 +25,10 @@ export default class Lighting {
       const factor = normalizedSourceVector.dotProduct(surfaceNormal);
       const id = intensity * polygon.intensity * factor;
 
-      // Calculate specular light. We need distance to light, and camera as vectors for this.
+      // Calculate specular light. We need distance to light, and camera as vectors for this. This is almost working, but the reflection itself seems inverted
       const l = normalizedSourceVector;
       const n = surfaceNormal;
-      const r = Vectors.perpendicular(normalizedSourceVector, surfaceNormal);
+      const r = new Vector3D(...Vectors.projection(normalizedSourceVector, surfaceNormal));
       dx = camera.x - targetPoint.x;
       dy = camera.y - targetPoint.y;
       dz = camera.z - targetPoint.z;
